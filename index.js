@@ -48,7 +48,6 @@ app.get("/api/:date?", function(req, res) {
     // initialize date value
     // convert the string params into number
     date = new Date(+reqDateOrUnix);
-    console.log(date.toString());
 
     // reference: https://nesin.io/blog/javascript-date-to-unix-timestamp
     // get THE unix timestamp of a date with @getTime
