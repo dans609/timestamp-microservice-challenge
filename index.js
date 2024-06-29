@@ -33,9 +33,9 @@ app.get("/api/:date?", function(req, res) {
   const reqDateOrUnix = req.params.date;
   let date;
 
-  // check whether the params is contains '-' or not, if included: [if] will handle the logic
-  // if the param string does not meet the criteria, all logic will go to the [else] statemet  
-  if(reqDateOrUnix.includes('-')) {
+  // check the params is either contain '-' or ' ' character, if so: [if] statement will handle the logic
+  // if the param string does not meet the criteria, all logic will goes tos [else] statement  
+  if(reqDateOrUnix.includes('-') || reqDateOrUnix.includes(' ')) {
     date = new Date(reqDateOrUnix);
     const unix = date.getTime();
     const utc = date.toUTCString();
