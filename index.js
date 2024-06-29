@@ -21,49 +21,41 @@ app.get("/", function (req, res) {
 
 
 // your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
+app.get("/api/", function (req, res) {
+  const date = new Date();
+  const currentDateUnix = date.getTime();
+  const currentDateUTC = date.toUTCString();
+
+  res.json({unix: currentDateUnix, utc: currentDateUTC});
 });
 
 app.get("/api/:date?", function(req, res) {
   const reqDateOrUnix = req.params.date;
   let date;
 
-  // check whether the params are set or not, if not set logic goes to [if] statement
-  // check whether the params is contains '-' or not, if included: [else-if] will handle the logic
+  // check whether the params is contains '-' or not, if included: [if] will handle the logic
   // if the param string does not meet the criteria, all logic will go to the [else] statemet  
-  if(reqDateOrUnix == undefined) {
-    date = new Date();
-    const currentUnixTimestamp = date.getTime();
-    const currentUTC = date.toUTCString();
-
-    res.json({ unix: currentUnixTimestamp, utc: currentUTC });
-  } else if(reqDateOrUnix.includes('-')) {
-    const [year, month, day] = reqDateOrUnix.split('-');
-    
-    const isLengthError = (year.length !== 4) ||
-      (month === undefined || month.length < 1 || month.length > 2) ||
-      (day === undefined || day.length < 1 || day.length > 2)
-
+  if(reqDateOrUnix.includes('-')) {
     date = new Date(reqDateOrUnix);
     const unix = date.getTime();
     const utc = date.toUTCString();
     
-    if(isLengthError || isNaN(unix) || unix == null)
+    if(isNaN(unix) || unix == null)
       return res.json({ error: utc });
           
     res.json({ unix, utc });
   } else {
     // initialize date value
-    // convert the string to number with '+' which a shorthand of valueOf() method
+    // convert the string params into number
     date = new Date(+reqDateOrUnix);
+    console.log(date.toString());
 
     // reference: https://nesin.io/blog/javascript-date-to-unix-timestamp
     // get THE unix timestamp of a date with @getTime
     const unix = date.getTime();
   
     // reference: https://www.geeksforgeeks.org/how-to-convert-a-javascript-date-to-utc/
-    // convert the default date string (browser's time zone: IST) to Universal Time with @toUTCString
+    // convert the default date string (browser's time zone: IST || ISO String) to Universal Time with @toUTCString
     const utc = date.toUTCString();
   
     // check whether the unix value is NaN | null,
