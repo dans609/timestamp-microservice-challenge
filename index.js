@@ -29,12 +29,6 @@ app.get("/api/:date?", function(req, res) {
   const reqDateOrUnix = req.params.date;
   let date;
 
-  const testDate = new Date(reqDateOrUnix);
-  console.log(testDate);
-  console.log(reqDateOrUnix);
-  console.log(`is the params undefined?: ${reqDateOrUnix == undefined}`);
-  console.log(`is the params contain (-)?: ${reqDateOrUnix.includes('-')}`);
-
   // check whether the params are set or not, if not set logic goes to [if] statement
   // check whether the params is contains '-' or not, if included: [else-if] will handle the logic
   // if the param string does not meet the criteria, all logic will go to the [else] statemet  
